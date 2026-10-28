@@ -1,7 +1,7 @@
 {
-  "name": "PriykaStore Billing",
-  "short_name": "PriykaStore",
-  "description": "Mobile-friendly grocery billing, stock, credit and expenses",
+  "name": "பிரியகா ஸ்டோர் பில்லிங்",
+  "short_name": "பிரியகா ஸ்டோர்",
+  "description": "மளிகைக் கடை பில்லிங், இருப்பு, கடன் மற்றும் செலவுகள்",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
