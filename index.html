@@ -94,7 +94,22 @@ const starterNames=[
 const money=n=>'₹'+(Number(n)||0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
 const today=()=>new Date().toISOString().slice(0,10);
 let state;
-function load(){try{state=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){state=null}if(!state||!Array.isArray(state.products)){state={products:starterNames.map((p,i)=>({id:i+1,number:String(i+1).padStart(2,'0'),name:p[0],category:p[1],price:p[2],stock:0})),bills:[],expenses:[],nextBill:1,nextProduct:starterNames.length+1};save()}}
+function seedProducts(){return starterNames.map((p,i)=>({id:i+1,number:String(i+1).padStart(2,'0'),name:p[0],category:p[1],price:p[2],stock:0}))}
+function load(){
+  try{state=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){state=null}
+  if(!state||!Array.isArray(state.products)||!Array.isArray(state.bills)||!Array.isArray(state.expenses)){
+    state={products:seedProducts(),bills:[],expenses:[],nextBill:1,nextProduct:starterNames.length+1};
+  }else{
+    // Recover a blank catalogue left by an earlier broken page without deleting saved bills or expenses.
+    if(state.products.length===0){
+      state.products=seedProducts();
+      state.nextProduct=Math.max(Number(state.nextProduct)||1,starterNames.length+1);
+    }
+    state.nextBill=Number(state.nextBill)||Math.max(1,...state.bills.map(b=>Number(b.id)||0))+1;
+    state.nextProduct=Number(state.nextProduct)||Math.max(1,...state.products.map(p=>Number(p.id)||0))+1;
+  }
+  save();
+}
 function save(){localStorage.setItem(KEY,JSON.stringify(state));refreshStats()}
 let cart=[];
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
