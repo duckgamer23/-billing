@@ -2,7 +2,7 @@
 <html lang="ta">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#14532d">
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./app-icon.svg" type="image/svg+xml">
@@ -40,11 +40,96 @@ table{width:100%;border-collapse:collapse}th,td{padding:9px 6px;border-bottom:1p
  .mobile-bill-button{white-space:nowrap;min-height:44px;padding:10px 14px}
  #currentBillCard{scroll-margin-top:12px}
 }
+/* Mobile UX pass */
+html{-webkit-text-size-adjust:100%}button,.btn,.tab,.product{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--green2);outline-offset:2px}
+.product:active,button:active{transform:scale(.98)}
+@media(max-width:800px){
+ header{padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top))}
+ header h1{font-size:19px}header p{font-size:12px}.tag{font-size:11px;padding:3px 8px}
+ nav{position:sticky;top:0;z-index:50;margin:0 0 12px;padding:8px 14px;background:var(--bg);flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;border-bottom:1px solid var(--line)}
+ nav::-webkit-scrollbar{display:none}
+ nav .tab{flex:0 0 auto;white-space:nowrap;min-height:40px;padding:8px 12px;font-size:14px;scroll-snap-align:start}
+ main{padding:0 12px 24px}
+ input,select,textarea{font-size:16px;min-height:44px}
+ button{min-height:44px}
+ .stats{gap:8px}.stat{padding:10px}.stat small{font-size:12px;line-height:1.3}
+ .stat strong{font-size:17px;overflow-wrap:anywhere}
+ .card{border-radius:14px}
+ .product{min-height:64px}
+ .total{font-size:26px}
+ /* Hide duplicate summary card on mobile: the bottom bar shows it */
+ .layout>div:last-child>.card:first-child{display:none}
+ /* Cart as stacked rows */
+ #currentBillCard table thead{display:none}
+ #cartBody tr{display:grid;grid-template-columns:1fr auto;gap:4px 10px;padding:10px 0;border-bottom:1px solid #edf1ed}
+ #cartBody td{border:0;padding:0;font-size:14px}
+ #cartBody td:nth-child(1){grid-column:1;font-weight:650;display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+ #cartBody td:nth-child(1) br{display:none}
+ #cartBody td:nth-child(1) .icon-delete{margin:0;width:36px;height:36px;min-height:36px;flex:0 0 auto}
+ #cartBody td:nth-child(2){grid-column:1;grid-row:2}
+ #cartBody td:nth-child(3){grid-column:2;grid-row:1;text-align:right;color:var(--muted);font-size:12px}
+ #cartBody td:nth-child(4){grid-column:2;grid-row:2;text-align:right;font-weight:750;color:var(--green);align-self:center}
+ #cartBody td[colspan]{grid-column:1/-1}
+ #cartBody .row{flex-wrap:nowrap;gap:12px;font-weight:700}
+ #cartBody [data-dec],#cartBody [data-inc]{width:40px;height:40px;min-height:40px;padding:0!important;font-size:20px;line-height:1}
+ /* Products table as cards */
+ #page-products table thead{display:none}
+ #productsTable tr{display:grid;grid-template-columns:auto 1fr 1fr auto;gap:6px 8px;align-items:end;padding:10px 0;border-bottom:1px solid #edf1ed}
+ #productsTable td{border:0;padding:0}
+ #productsTable td:nth-child(1){grid-row:1;color:var(--muted);align-self:start}
+ #productsTable td:nth-child(2){grid-column:2/-1;grid-row:1;text-align:left}
+ #productsTable td:nth-child(3){grid-column:1/3}
+ #productsTable td:nth-child(3)::before{content:"விலை ₹";display:block;font-size:12px;color:var(--muted)}
+ #productsTable td:nth-child(4)::before{content:"இருப்பு";display:block;font-size:12px;color:var(--muted)}
+ #productsTable input{width:100%!important;padding:8px!important}
+ #productsTable button{padding:8px 12px!important}
+ /* Credit table as cards */
+ #creditList thead{display:none}
+ #creditList tr{display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;padding:12px 0;border-bottom:1px solid #edf1ed}
+ #creditList td{border:0;padding:0;text-align:left!important;font-size:14px}
+ #creditList td:nth-child(3)::before{content:"மொத்தம்: ";color:var(--muted)}
+ #creditList td:nth-child(4)::before{content:"செலுத்தியது: ";color:var(--muted)}
+ #creditList td:nth-child(5){grid-column:1/-1;font-weight:750;color:var(--red)}
+ #creditList td:nth-child(5)::before{content:"நிலுவை: ";color:var(--muted);font-weight:400}
+ #creditList td:nth-child(6){grid-column:1/-1;display:flex;gap:8px}
+ #creditList td:nth-child(6) input{flex:1;width:auto!important}
+ #creditList td:nth-child(6) button{margin:0!important;padding:8px 16px!important}
+ #recentBills p{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
+ #recentBills [data-print]{min-height:36px}
+ .actions button{flex:1 1 calc(50% - 8px)}
+ .row>#clearSearch{margin-top:22px}
+}
+@media(max-width:420px){.stats{grid-template-columns:repeat(3,minmax(0,1fr))}.stat strong{font-size:15px}.tag{display:none}.product-results{grid-template-columns:repeat(2,minmax(0,1fr))}.product{padding:9px;font-size:14px}}
+/* Language toggle, customer lookup, balance */
+.lang-toggle{display:inline-flex;border:1px solid #86efac;border-radius:99px;overflow:hidden}
+.lang-toggle button{background:transparent;color:#d1fae5;border-radius:0;padding:6px 12px;min-height:34px;font-size:13px}
+.lang-toggle button.on{background:#bbf7d0;color:var(--green)}
+.head-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.cust-wrap{position:relative}
+.cust-suggest{position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:60;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 30px #17351b26;max-height:260px;overflow:auto}
+.cust-suggest button{display:flex;width:100%;justify-content:space-between;align-items:center;gap:10px;background:#fff;color:var(--ink);border-radius:0;border-bottom:1px solid #f0f3f0;text-align:left;font-weight:500;padding:10px 12px}
+.cust-suggest button:hover,.cust-suggest button:focus{background:#f0fdf4}
+.cust-suggest small{display:block;color:var(--muted);font-size:12px}
+.cust-suggest .due{color:var(--red);font-weight:700;white-space:nowrap}.cust-suggest .ok{color:var(--green2);white-space:nowrap;font-size:12px}
+.cust-suggest .empty{padding:10px 12px;color:var(--muted);font-size:13px}
+.cust-info{margin-top:6px;border-radius:10px;padding:8px 10px;font-size:13px;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.cust-info.known{background:#f0fdf4;color:#166534;border:1px solid #bbf7d0}.cust-info.new{background:#fffbeb;color:#854d0e;border:1px solid #fde68a}
+.cust-info b.due{color:var(--red)}.cust-info button{padding:6px 10px;min-height:34px;font-size:13px}
+.bill-summary{border:1px dashed #b7c9ba;border-radius:12px;padding:10px 12px;margin:8px 0 12px;background:#fafcfa}
+.bill-summary .ln{display:flex;justify-content:space-between;gap:10px;padding:3px 0;font-size:14px}
+.bill-summary .ln.big{font-size:17px;font-weight:800;border-top:1px solid var(--line);margin-top:4px;padding-top:7px}
+.bill-summary .red{color:var(--red)}.bill-summary .grn{color:var(--green2)}
+.cust-card{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #edf1ed;flex-wrap:wrap}
+.cust-card .amt{font-weight:800;color:var(--red)}.cust-card .amt.zero{color:var(--green2);font-weight:600}
+.cust-card .pay{display:flex;gap:6px;flex:1 1 220px;justify-content:flex-end}.cust-card .pay input{max-width:140px}
+.mobile-bill-due{font-size:12px;color:var(--red);font-weight:700}
+html[lang=en] #productsTable td:nth-child(3)::before{content:"Price ₹"}html[lang=en] #productsTable td:nth-child(4)::before{content:"Stock"}html[lang=en] #creditList td:nth-child(3)::before{content:"Total: "}html[lang=en] #creditList td:nth-child(4)::before{content:"Paid: "}html[lang=en] #creditList td:nth-child(5)::before{content:"Due: "}
 @media print{header,nav,.noprint,.stats{display:none!important}body{background:#fff}main{max-width:none;padding:0}.card{border:0;box-shadow:none;padding:0}.layout{display:block}.layout>.card:first-child{display:none}.layout>.card{margin:0}.receipt-title{display:block!important}}
 </style>
 </head>
 <body>
-<header><div><h1>PriykaStore</h1><p>கிராம மளிகைக் கடை · பில்லிங் & இருப்பு</p></div><span class="tag">தொடக்க பதிப்பு · இந்தச் சாதனத்தில் மட்டும் சேமிக்கப்படும்</span></header>
+<header><div><h1>PriykaStore</h1><p>கிராம மளிகைக் கடை · பில்லிங் & இருப்பு</p></div><div class="head-right"><span class="tag">தொடக்க பதிப்பு · இந்தச் சாதனத்தில் மட்டும் சேமிக்கப்படும்</span><div class="lang-toggle noprint" role="group" aria-label="Language"><button type="button" data-lang="ta">தமிழ்</button><button type="button" data-lang="en">English</button></div></div></header>
 <nav class="noprint" id="nav">
 <button class="tab active" data-page="billing">விற்பனை பில்</button><button class="tab" data-page="products">பொருட்கள் & இருப்பு</button><button class="tab" data-page="credit">வாடிக்கையாளர் கடன்</button><button class="tab" data-page="expenses">செலவுகள்</button><button class="tab" data-page="reports">அறிக்கைகள் & காப்புப்பிரதி</button>
 </nav>
@@ -66,10 +151,10 @@ table{width:100%;border-collapse:collapse}th,td{padding:9px 6px;border-bottom:1p
 <div class="card" id="currentBillCard">
 <div class="row" style="justify-content:space-between"><h2>தற்போதைய பில்</h2><button class="secondary" id="clearBill">பில்லை அழிக்கவும்</button></div>
 <div class="tablewrap"><table><thead><tr><th>பொருள்</th><th>எண்ணிக்கை</th><th>விலை</th><th>மொத்தம்</th></tr></thead><tbody id="cartBody"><tr><td colspan="4" class="muted">இன்னும் பொருட்கள் சேர்க்கப்படவில்லை.</td></tr></tbody></table></div>
-<div class="grid2" style="margin-top:12px"><div class="field"><label for="customerName">வாடிக்கையாளர் பெயர் (விருப்பம்)</label><input id="customerName" placeholder="வாடிக்கையாளர் பெயர்"></div><div class="field"><label for="paymentMethod">கட்டணம் செலுத்தும் முறை</label><select id="paymentMethod"><option value="Cash">பணம்</option><option value="UPI">UPI</option><option value="Split">பணம் + UPI</option><option value="Credit">கடன்</option></select></div></div>
+<div class="grid2" style="margin-top:12px"><div class="field"><label for="customerName">வாடிக்கையாளர் பெயர் (விருப்பம்)</label><div class="cust-wrap"><input id="customerName" placeholder="பெயர் அல்லது கைபேசி எண்ணால் தேடவும்" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="custSuggest"><div id="custSuggest" class="cust-suggest hide" role="listbox"></div></div><div id="custInfo" class="cust-info hide" aria-live="polite"></div></div><div class="field"><label for="paymentMethod">கட்டணம் செலுத்தும் முறை</label><select id="paymentMethod"><option value="Cash">பணம்</option><option value="UPI">UPI</option><option value="Split">பணம் + UPI</option><option value="Credit">கடன்</option></select></div></div>
 <div id="splitFields" class="grid2 hide"><div class="field"><label for="cashPaid">ரொக்கத் தொகை ₹</label><input id="cashPaid" type="number" min="0" step=".01" value="0"></div><div class="field"><label for="upiPaid">UPI தொகை ₹</label><input id="upiPaid" type="number" min="0" step=".01" value="0"></div></div>
-<div class="field"><label for="paidAmount">செலுத்திய தொகை ₹</label><input id="paidAmount" type="number" min="0" step=".01" value="0"></div>
-<div class="total" id="billTotal">₹0.00</div>
+<div class="field"><label for="paidAmount">பெற்ற தொகை ₹ (ரொக்கம் அதிகமாக இருந்தால் சில்லறை கணக்கிடப்படும்)</label><input id="paidAmount" type="number" min="0" step=".01" value="0"></div>
+<div class="total" id="billTotal">₹0.00</div><div class="bill-summary" id="billSummary"></div>
 <button class="wide" id="completeBill">பில்லை முடித்து சேமிக்கவும்</button>
 <p class="muted">சேமித்த பிறகு ரசீதை அச்சிடலாம். SEZNIK Veer 58mm ப்ளூடூத் பிரிண்டர் எல்லா மொபைல் உலாவிகளிலும் நேரடியாக இயங்கும் என உறுதி இல்லை; முதலில் சோதிக்கவும்.</p>
 </div>
@@ -86,7 +171,7 @@ table{width:100%;border-collapse:collapse}th,td{padding:9px 6px;border-bottom:1p
 <div class="tablewrap"><table><thead><tr><th>எண்</th><th>பொருள்</th><th>விலை ₹</th><th>இருப்பு</th><th></th></tr></thead><tbody id="productsTable"></tbody></table></div></div>
 <div class="card"><h2>புதிய பொருளைச் சேர்க்கவும்</h2><div class="grid2"><div class="field"><label for="newName">பொருளின் பெயர்</label><input id="newName" placeholder="உதா: துவரம் பருப்பு 1 கிலோ"></div><div class="field"><label for="newCategory">வகை</label><input id="newCategory" placeholder="உதா: பருப்பு வகைகள்" value="General"></div><div class="field"><label for="newPrice">விற்பனை விலை ₹</label><input id="newPrice" type="number" min="0" step=".01" value="0"></div><div class="field"><label for="newStock">தொடக்க இருப்பு எண்ணிக்கை</label><input id="newStock" type="number" min="0" step="1" value="0"></div></div><button id="addProduct">பொருளைச் சேர்க்கவும்</button></div>
 </section>
-<section id="page-credit" class="hide"><div class="card"><h2>வாடிக்கையாளர் கடன்</h2><p class="muted">கடன் பில் அல்லது முழுமையாகப் பணம் செலுத்தாத பில்கள் இங்கே காட்டப்படும்.</p><div id="creditList"></div></div></section>
+<section id="page-credit" class="hide"><div class="card"><h2>வாடிக்கையாளர் வாரியான நிலுவை</h2><div id="customerList"></div></div><div class="card"><h2>புதிய வாடிக்கையாளரைப் பதிவு செய்யவும்</h2><div class="grid2"><div class="field"><label for="newCustName">வாடிக்கையாளர் பெயர்</label><input id="newCustName"></div><div class="field"><label for="newCustPhone">கைபேசி எண் (விருப்பம்)</label><input id="newCustPhone" type="tel" inputmode="numeric"></div></div><div class="field"><label for="newCustDue">முந்தைய நிலுவை (பழைய கணக்கு) ₹</label><input id="newCustDue" type="number" min="0" step=".01" value="0"></div><button id="addCustomer">பதிவு செய்</button></div><div class="card"><h2>பில் வாரியான நிலுவை</h2><p class="muted">கடன் பில் அல்லது முழுமையாகப் பணம் செலுத்தாத பில்கள் இங்கே காட்டப்படும்.</p><div id="creditList"></div></div></section>
 <section id="page-expenses" class="hide"><div class="card"><h2>கடைச் செலவைச் சேர்க்கவும்</h2><div class="grid2"><div class="field"><label for="expenseDate">தேதி</label><input id="expenseDate" type="date"></div><div class="field"><label for="expenseAmount">தொகை ₹</label><input id="expenseAmount" type="number" min="0" step=".01"></div></div><div class="field"><label for="expenseNote">செலவு விவரம்</label><input id="expenseNote" placeholder="உதா: போக்குவரத்து, மின்சாரம், பைகள்"></div><button id="addExpense">செலவைச் சேமிக்கவும்</button></div><div class="card"><h2>செலவு வரலாறு</h2><div id="expenseList"></div></div></section>
 <section id="page-reports" class="hide">
 <div class="card"><h2>அறிக்கைகள் & பதிவிறக்கம்</h2><p class="muted">பில்கள், பில் பொருட்கள், பொருட்கள்/இருப்பு, கடன் மற்றும் செலவுகளுக்கான CSV கோப்புகளைப் பதிவிறக்கலாம். Excel-ல் திறக்கலாம். இந்தச் சாதனத்தில் சேமிக்கப்பட்ட தரவுகள் மட்டுமே இதில் இருக்கும்.</p><div class="actions"><button id="exportBills">பில் CSV</button><button id="exportItems">பில் பொருட்கள் CSV</button><button id="exportProducts">பொருட்கள் & இருப்பு CSV</button><button id="exportCredit">கடன் CSV</button><button id="exportExpenses">செலவுகள் CSV</button><button id="exportAll">முழு காப்புப்பிரதி JSON</button><button id="printReport" class="secondary">அச்சிடு / PDF சேமி</button></div></div>
@@ -98,10 +183,217 @@ table{width:100%;border-collapse:collapse}th,td{padding:9px 6px;border-bottom:1p
  <div class="mobile-bill-meta">
   <div class="mobile-bill-label">தற்போதைய பில்</div>
   <div class="mobile-bill-total" id="mobileBillTotal">₹0.00</div>
-  <div class="mobile-bill-count" id="mobileBillCount">0 பொருட்கள்</div>
+  <div class="mobile-bill-count" id="mobileBillCount">0 பொருட்கள்</div><div class="mobile-bill-due" id="mobileBillDue"></div>
  </div>
  <button type="button" class="mobile-bill-button" id="mobileBillButton">பில் விவரம் ↓</button>
 </div>
+<script>
+// Language layer: UI is authored in Tamil; when English is selected, Tamil phrases are swapped using this dictionary.
+const LANG_KEY='priykastore-lang';
+let lang='ta';try{lang=localStorage.getItem(LANG_KEY)==='en'?'en':'ta'}catch(e){}
+const EN={
+"இந்தப் பதிப்பு தரவை இந்த உலாவியிலேயே சேமிக்கிறது; மற்ற மொபைல் அல்லது கணினியுடன் ஒத்திசைக்காது. உலாவித் தரவை அழித்தால் அல்லது சாதனம் தொலைந்தால் பதிவுகள் இழக்கப்படலாம். அடிக்கடி காப்புப்பிரதி எடுக்கவும். பல சாதன ஒத்திசைவுக்கு தனி பாதுகாப்பான தரவுத்தளம் தேவை.":"This version stores data in this browser only; it does not sync with other phones or computers. Clearing browser data or losing the device may lose records. Take backups often. Multi-device sync needs a separate secure database.",
+"பில்கள், பில் பொருட்கள், பொருட்கள்/இருப்பு, கடன் மற்றும் செலவுகளுக்கான CSV கோப்புகளைப் பதிவிறக்கலாம். Excel-ல் திறக்கலாம். இந்தச் சாதனத்தில் சேமிக்கப்பட்ட தரவுகள் மட்டுமே இதில் இருக்கும்.":"Download CSV files for bills, bill items, products/stock, credit and expenses. They open in Excel. Only data saved on this device is included.",
+"பொதுவான மளிகைப் பொருட்கள் பட்டியல் உள்ளது. காட்டப்படும் விலைகள் மாதிரி மட்டுமே; இருப்பு 0. ஒவ்வொரு பொருளுக்கும் சரியான விலையையும் தொடக்க இருப்பையும் உள்ளிடவும்.":"A common grocery list is preloaded. Prices shown are samples only; stock is 0. Enter the correct price and opening stock for each item.",
+"சேமித்த பிறகு ரசீதை அச்சிடலாம். SEZNIK Veer 58mm ப்ளூடூத் பிரிண்டர் எல்லா மொபைல் உலாவிகளிலும் நேரடியாக இயங்கும் என உறுதி இல்லை; முதலில் சோதிக்கவும்.":"You can print the receipt after saving. The SEZNIK Veer 58mm Bluetooth printer may not work directly in every mobile browser; test it first.",
+"ஒரு பொருளைத் தட்டி பில்லில் சேர்க்கவும். பொருட்கள் & இருப்பு பகுதியில் விலையையும் இருப்பையும் மாற்றலாம். மாதிரி விலைகளைச் சரிபார்த்து மாற்றவும்.":"Tap an item to add it to the bill. Change prices and stock in Products & Stock. Check and update the sample prices.",
+"முன்பு பதிவிறக்கிய PriykaStore JSON காப்புப்பிரதியைத் தேர்ந்தெடுக்கவும். மீட்டெடுத்தால் இச்சாதனத்தில் உள்ள தற்போதைய தரவு மாற்றப்படும்.":"Choose a PriykaStore JSON backup you downloaded earlier. Restoring replaces the current data on this device.",
+"பணம் + UPI தொகை பில் மொத்தத்துக்கு சமமாக இருக்க வேண்டும். பகுதி கட்டணம் என்றால் பணம் அல்லது UPI தேர்வு செய்யவும்.":"Cash + UPI must equal the bill total. For a partial payment choose Cash or UPI.",
+"புதிய பொருட்களின் இருப்பு 0 ஆக இருக்கும். விற்பனை தொடங்கும் முன் உண்மையான இருப்பையும் விலையையும் உள்ளிடவும்.":"New items start with 0 stock. Enter real stock and prices before you start selling.",
+"இந்தப் பில்லில் நிலுவை உள்ளது; வாடிக்கையாளர் பெயர் இல்லை. பெயரில்லா கடனாகச் சேமிக்கவா?":"This bill has a balance due but no customer name. Save as unnamed credit?",
+"கடன் பில் அல்லது முழுமையாகப் பணம் செலுத்தாத பில்கள் இங்கே காட்டப்படும்.":"Credit bills and bills not fully paid are shown here.",
+"நிலுவையை விட அதிகமில்லாத, பூஜ்ஜியத்தை விட அதிகமான தொகையை உள்ளிடவும்.":"Enter an amount above zero and not more than the balance due.",
+"பொருள் கிடைக்கவில்லை. பொருட்கள் & இருப்பு பகுதியில் சேர்க்கவும்.":"No item found. Add it in Products & Stock.",
+"சரியான விலை மற்றும் பூஜ்ஜியத்துக்கு குறையாத இருப்பை உள்ளிடவும்.":"Enter a valid price and a stock of zero or more.",
+"இந்தக் காப்புப்பிரதியை மீட்டெடுத்து தற்போதைய தரவை மாற்றவா?":"Restore this backup and replace the current data?",
+"தொடக்க பதிப்பு · இந்தச் சாதனத்தில் மட்டும் சேமிக்கப்படும்":"Starter edition · saved on this device only",
+"செலுத்திய தொகை ₹0 முதல் பில் மொத்தம் வரை இருக்க வேண்டும்.":"Amount paid must be between ₹0 and the bill total.",
+"பொருள் எண் அல்லது பெயரை உள்ளிடவும். உதா: 1 அல்லது பால்.":"Type an item number or name. e.g. 1 or milk.",
+"முதலில் JSON காப்புப்பிரதி கோப்பைத் தேர்ந்தெடுக்கவும்.":"Choose a JSON backup file first.",
+"பொருளின் பெயர், விலை, இருப்பைச் சரியாக உள்ளிடவும்.":"Enter a valid item name, price and stock.",
+"அறிக்கையை அச்சிட பாப்-அப் விண்டோவை அனுமதிக்கவும்.":"Allow pop-up windows to print the report.",
+"இது சரியான PriykaStore காப்புப்பிரதி கோப்பு அல்ல.":"This is not a valid PriykaStore backup file.",
+"தேர்ந்தெடுத்த காப்புப்பிரதியை மீட்டெடுக்கவும்":"Restore selected backup",
+"ரசீது அச்சிட பாப்-அப் விண்டோவை அனுமதிக்கவும்.":"Allow pop-up windows to print the receipt.",
+"தேதி, தொகை மற்றும் செலவு விவரத்தை உள்ளிடவும்.":"Enter the date, amount and expense details.",
+"தற்போதைய தரவை மாற்றுவதை உறுதிப்படுத்தவும்.":"Confirm replacing the current data.",
+"கிராம மளிகைக் கடை · பில்லிங் & இருப்பு":"Village grocery · Billing & Stock",
+"இன்னும் பொருட்கள் சேர்க்கப்படவில்லை.":"No items added yet.",
+"முதலில் ஒரு பொருளையாவது சேர்க்கவும்.":"Add at least one item first.",
+"உதா: போக்குவரத்து, மின்சாரம், பைகள்":"e.g. transport, electricity, bags",
+"செலவுகள் இன்னும் சேமிக்கப்படவில்லை.":"No expenses saved yet.",
+"பொருள் விவரம் புதுப்பிக்கப்பட்டது.":"Item details updated.",
+"காப்புப்பிரதி மீட்டெடுக்கப்பட்டது.":"Backup restored.",
+"இதுவரை பில்கள் சேமிக்கப்படவில்லை.":"No bills saved yet.",
+"பொருள் எண் அல்லது பெயரைத் தேடவும்":"Search by item number or name",
+"வாடிக்கையாளர் பெயர் (விருப்பம்)":"Customer (optional)",
+"காப்புப்பிரதியை மீட்டெடுக்கவும்":"Restore backup",
+"பிரியகா ஸ்டோர் · விற்பனை பில்":"PriykaStore · Sales Bill",
+"பொருட்கள் பட்டியல் & இருப்பு":"Product list & stock",
+"பொருட்கள் பட்டியலில் தேடவும்":"Search the product list",
+"கட்டணம் பதிவு செய்யப்பட்டது.":"Payment recorded.",
+"பில்லை முடித்து சேமிக்கவும்":"Complete & save bill",
+"அறிக்கைகள் & காப்புப்பிரதி":"Reports & Backup",
+"புதிய பொருளைச் சேர்க்கவும்":"Add a new item",
+"உதா: துவரம் பருப்பு 1 கிலோ":"e.g. Toor dal 1 kg",
+"கடைச் செலவைச் சேர்க்கவும்":"Add a shop expense",
+"தற்போதைய பில்லை அழிக்கவா?":"Clear the current bill?",
+"பால், அரிசி எனத் தேடவும்":"milk, rice…",
+"தொடக்க இருப்பு எண்ணிக்கை":"Opening stock quantity",
+"அறிக்கைகள் & பதிவிறக்கம்":"Reports & Downloads",
+"பொருள் எண் அல்லது பெயர்":"Item number or name",
+"கட்டணம் செலுத்தும் முறை":"Payment method",
+"இப்போது ரசீதை அச்சிடவா?":"Print the receipt now?",
+"பிரியகா ஸ்டோர் பில் எண்":"PriykaStore Bill No.",
+"தரவு சேமிப்பு குறிப்பு":"Data storage note",
+"செலவு சேமிக்கப்பட்டது.":"Expense saved.",
+"பிரியகா ஸ்டோர் அறிக்கை":"PriykaStore Report",
+"மீண்டும் வருக! நன்றி.":"Thank you! Visit again.",
+"பொருளைச் சேர்க்கவும்":"Add item",
+"நிலுவைக் கடன் இல்லை.":"No outstanding credit.",
+"பொருட்கள் & இருப்பு":"Products & Stock",
+"பொருட்களைத் தேடவும்":"Search items",
+"வாடிக்கையாளர் பெயர்":"Customer name",
+"உதா: பருப்பு வகைகள்":"e.g. Pulses",
+"செலவைச் சேமிக்கவும்":"Save expense",
+"நேரடி வாடிக்கையாளர்":"Walk-in customer",
+"வாடிக்கையாளர் கடன்":"Customer Credit",
+"விரைவுச் சுருக்கம்":"Quick summary",
+"முழு காப்புப்பிரதி":"Full backup",
+"அச்சிடு / PDF சேமி":"Print / Save PDF",
+"தற்போதைய பில் தொகை":"Current bill amount",
+"பில்லை அழிக்கவும்":"Clear bill",
+"சமீபத்திய பில்கள்":"Recent bills",
+"மளிகைக் கடை ரசீது":"Grocery receipt",
+"அனைத்து வகைகளும்":"All categories",
+"சேமிக்கப்பட்டது.":"saved.",
+"தற்போதைய இருப்பு":"Current stock",
+"உருவாக்கிய நேரம்":"Generated at",
+"மொத்தச் செலவுகள்":"Total expenses",
+"பெயரிடப்படாதவர்":"Unnamed",
+"ஒரு பொருள் விலை":"Unit price",
+"இன்றைய விற்பனை":"Today's sales",
+"இன்றைய பில்கள்":"Today's bills",
+"செலுத்திய தொகை":"Amount paid",
+"பொருளின் பெயர்":"Item name",
+"பில் பொருட்கள்":"Bill items",
+"நிலுவைக் கடன்":"Outstanding credit",
+"தற்போதைய பில்":"Current bill",
+"பொருளை நீக்கு":"Remove item",
+"வாடிக்கையாளர்":"Customer",
+"மொத்த பில்கள்":"Total bills",
+"மொத்த விற்பனை":"Total sales",
+"விற்பனை பில்":"Billing",
+"ரொக்கத் தொகை":"Cash amount",
+"விற்பனை விலை":"Selling price",
+"செலவு விவரம்":"Expense details",
+"செலவு வரலாறு":"Expense history",
+"செலுத்தியது":"Paid",
+"பில் விவரம்":"Bill details",
+"பெறும் தொகை":"Amount received",
+"வரி மொத்தம்":"Line total",
+"பொருள் எண்":"Item no.",
+"எண்ணிக்கை":"Qty",
+"பொருட்கள்":"items",
+"சுருக்கம்":"Summary",
+"செலவுகள்":"Expenses",
+"பில் எண்":"Bill No.",
+"இருப்பு":"Stock",
+"மொத்தம்":"Total",
+"ரொக்கம்":"Cash",
+"அச்சிடு":"Print",
+"கட்டணம்":"Payment",
+"பில்கள்":"Bills",
+"நிலுவை":"Due",
+"பொருள்":"Item",
+"விவரம்":"Details",
+"நேரம்":"Time",
+"பெயர்":"Name",
+"விலை":"Price",
+"பணம்":"Cash",
+"கடன்":"Credit",
+"தொகை":"Amount",
+"தேதி":"Date",
+"பில்":"Bill",
+"சேமி":"Save",
+"அழி":"Clear",
+"வகை":"Category",
+"எண்":"No.",
+// Customer & balance features
+"பெயர் அல்லது கைபேசி எண்ணால் தேடவும்":"Search name or mobile number",
+"பதிவு செய்த வாடிக்கையாளர்கள்":"Registered customers",
+"புதிய வாடிக்கையாளரைப் பதிவு செய்யவும்":"Register a new customer",
+"புதிய வாடிக்கையாளர் — பதிவு செய்யப்படவில்லை":"New customer — not registered",
+"பதிவு செய்த வாடிக்கையாளர்":"Registered customer",
+"வாடிக்கையாளராகப் பதிவு செய்":"Register customer",
+"வாடிக்கையாளர் பதிவு செய்யப்பட்டது.":"Customer registered.",
+"இந்தப் பெயரில் ஏற்கனவே வாடிக்கையாளர் உள்ளார்.":"A customer with this name already exists.",
+"வாடிக்கையாளர் பெயரை உள்ளிடவும்.":"Enter the customer name.",
+"கைபேசி எண் (விருப்பம்)":"Mobile number (optional)",
+"கைபேசி எண்":"Mobile number",
+"முந்தைய நிலுவை (பழைய கணக்கு) ₹":"Opening balance (old ledger) ₹",
+"முந்தைய நிலுவை":"Previous due",
+"இந்தப் பில் நிலுவை":"This bill's due",
+"மொத்த நிலுவை":"Total balance due",
+"திருப்பித் தர வேண்டியது":"Change to return",
+"பெற்ற தொகை ₹ (ரொக்கம் அதிகமாக இருந்தால் சில்லறை கணக்கிடப்படும்)":"Amount received ₹ (extra cash is shown as change)",
+"பில் மொத்தம்":"Bill total",
+"முழுமையாகச் செலுத்தப்பட்டது":"Fully paid",
+"கடன் வசூல்":"Collect payment",
+"வாடிக்கையாளர் வாரியான நிலுவை":"Customer-wise balance",
+"பதிவு செய்த வாடிக்கையாளர்கள் இல்லை.":"No registered customers yet.",
+"நிலுவை இல்லை":"No dues",
+"பில்கள் நிலுவையில்":"bills pending",
+"வாடிக்கையாளர் தேடல்":"Find customer",
+"பதிவு செய்":"Register",
+"பொருத்தம் இல்லை":"No match",
+"பில் வாரியான நிலுவை":"Bill-wise dues",
+"பழைய கணக்கு":"Old ledger",
+"முருகன்":"Murugan","லட்சுமி":"Lakshmi","செல்வம்":"Selvam"
+};
+let enKeys=null;
+function trKeys(){
+ if(enKeys)return enKeys;
+ const extra={};
+ try{for(const [e,t] of Object.entries(tamilProductNames))extra[t]=e;for(const [e,t] of Object.entries(tamilCategories))extra[t]=e}catch(e){}
+ Object.assign(EN,extra);
+ enKeys=Object.keys(EN).sort((a,b)=>b.length-a.length);
+ return enKeys;
+}
+const TA_RE=/[஀-௿]/;
+function tr(s){
+ if(lang!=='en'||typeof s!=='string'||!TA_RE.test(s))return s;
+ for(const k of trKeys()){if(s.includes(k))s=s.split(k).join(EN[k]);if(!TA_RE.test(s))break}
+ return s;
+}
+const ATTRS=['placeholder','aria-label','title'];
+function trNode(root){
+ if(lang!=='en')return;
+ if(root.nodeType===3){if(TA_RE.test(root.data)){if(root.__ta===undefined)root.__ta=root.data;root.data=tr(root.data)}return}
+ if(root.nodeType!==1||root.tagName==='SCRIPT'||root.tagName==='STYLE')return;
+ const els=[root,...root.querySelectorAll('*')];
+ for(const el of els){if(!el.getAttribute)continue;for(const a of ATTRS){const v=el.getAttribute(a);if(v&&TA_RE.test(v)){el.__taAttr=el.__taAttr||{};if(!(a in el.__taAttr))el.__taAttr[a]=v;el.setAttribute(a,tr(v))}}}
+ const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;
+ while((n=w.nextNode())){const p=n.parentNode;if(p&&(p.tagName==='SCRIPT'||p.tagName==='STYLE'))continue;if(TA_RE.test(n.data)){if(n.__ta===undefined)n.__ta=n.data;n.data=tr(n.data)}}
+}
+function restoreTamil(){
+ const w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let n;
+ while((n=w.nextNode())){if(n.__ta!==undefined){n.data=n.__ta;delete n.__ta}}
+ document.querySelectorAll('*').forEach(el=>{if(el.__taAttr){for(const a in el.__taAttr)el.setAttribute(a,el.__taAttr[a]);delete el.__taAttr}});
+}
+const TITLE_TA=document.title;
+function applyLang(){
+ document.documentElement.lang=lang;
+ document.title=lang==='en'?tr(TITLE_TA):TITLE_TA;
+ if(lang==='en')trNode(document.body);else restoreTamil();
+ document.querySelectorAll('[data-lang]').forEach(b=>{b.classList.toggle('on',b.dataset.lang===lang);b.setAttribute('aria-pressed',b.dataset.lang===lang)});
+}
+function setLang(l){lang=l;try{localStorage.setItem(LANG_KEY,l)}catch(e){}const keep=['#paidAmount','#cashPaid','#upiPaid'].map(id=>document.querySelector(id).value);applyLang();if(typeof refreshAll==='function')refreshAll();['#paidAmount','#cashPaid','#upiPaid'].forEach((id,i)=>document.querySelector(id).value=keep[i]);if(typeof updateBillSummary==='function')updateBillSummary();if(typeof updateCustomerInfo==='function')updateCustomerInfo()}
+new MutationObserver(ms=>{if(lang!=='en')return;for(const m of ms)m.addedNodes.forEach(trNode)}).observe(document.body,{childList:true,subtree:true});
+const _alert=window.alert.bind(window),_confirm=window.confirm.bind(window),_prompt=window.prompt.bind(window);
+window.alert=m=>_alert(tr(String(m)));window.confirm=m=>_confirm(tr(String(m)));window.prompt=(m,d)=>_prompt(tr(String(m)),d);
+document.querySelectorAll('[data-lang]').forEach(b=>b.onclick=()=>setLang(b.dataset.lang));
+</script>
 <script>
 const KEY='priykastore-billing-v1';
 const starterNames=[
@@ -139,7 +431,7 @@ function seedProducts(){return starterNames.map((p,i)=>({id:i+1,number:String(i+
 function load(){
   try{state=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){state=null}
   if(!state||!Array.isArray(state.products)||!Array.isArray(state.bills)||!Array.isArray(state.expenses)){
-    state={products:seedProducts(),bills:[],expenses:[],nextBill:1,nextProduct:starterNames.length+1};
+    state={products:seedProducts(),bills:[],expenses:[],customers:demoCustomers(),nextBill:1,nextProduct:starterNames.length+1,nextCustomer:4};
   }else{
     // Recover a blank catalogue left by an earlier broken page without deleting saved bills or expenses.
     const catalogueMalformed=state.products.some(p=>!p||typeof p.name!=="string"||typeof p.number!=="string"||typeof p.category!=="string"||!Number.isFinite(Number(p.id))||!Number.isFinite(Number(p.price))||!Number.isFinite(Number(p.stock)));
@@ -150,12 +442,19 @@ function load(){
     state.nextBill=Number(state.nextBill)||Math.max(1,...state.bills.map(b=>Number(b.id)||0))+1;
     state.nextProduct=Number(state.nextProduct)||Math.max(1,...state.products.map(p=>Number(p.id)||0))+1;
   }
+  if(!Array.isArray(state.customers)){state.customers=state.bills.length?[]:demoCustomers();state.nextCustomer=state.customers.length+1}
+  state.nextCustomer=Number(state.nextCustomer)||Math.max(0,...state.customers.map(c=>Number(c.id)||0))+1;
   save();
 }
+function demoCustomers(){return[{id:1,name:'முருகன்',phone:'9876543210',openingDue:250},{id:2,name:'லட்சுமி',phone:'9443122110',openingDue:0},{id:3,name:'செல்வம்',phone:'9003055667',openingDue:120}]}
+const norm=s=>String(s??'').trim().toLowerCase();
+function findCustomer(name){const n=norm(name);return n?state.customers.find(c=>norm(c.name)===n||(c.phone&&c.phone===n.replace(/\D/g,''))):null}
+function customerDue(name){const n=norm(name);if(!n)return 0;const c=findCustomer(name);const bills=state.bills.filter(b=>norm(b.customer)===norm(c?c.name:name));return +(bills.reduce((s,b)=>s+Math.max(0,b.total-b.paid),0)+(c?Number(c.openingDue)||0:0)).toFixed(2)}
+function customerPendingBills(name){const n=norm(name);return n?state.bills.filter(b=>norm(b.customer)===n&&b.total>b.paid).length:0}
 function save(){localStorage.setItem(KEY,JSON.stringify(state));refreshStats()}
 let cart=[];
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function refreshStats(){const bs=state.bills.filter(b=>b.date===today());document.querySelector('#todaySales').textContent=money(bs.reduce((s,b)=>s+b.total,0));document.querySelector('#todayBills').textContent=bs.length;document.querySelector('#creditTotal').textContent=money(state.bills.reduce((s,b)=>s+Math.max(0,b.total-b.paid),0))}
+function refreshStats(){const bs=state.bills.filter(b=>b.date===today());document.querySelector('#todaySales').textContent=money(bs.reduce((s,b)=>s+b.total,0));document.querySelector('#todayBills').textContent=bs.length;document.querySelector('#creditTotal').textContent=money(state.bills.reduce((s,b)=>s+Math.max(0,b.total-b.paid),0)+(state.customers||[]).reduce((s,c)=>s+(Number(c.openingDue)||0),0))}
 function showPage(name){document.querySelectorAll('main section').forEach(s=>s.classList.add('hide'));document.querySelector('#page-'+name).classList.remove('hide');document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===name));const bar=document.querySelector('#mobileBillBar');if(bar)bar.classList.toggle('is-hidden',name!=='billing');if(name==='products')renderProducts();if(name==='credit')renderCredit();if(name==='expenses')renderExpenses();if(name==='billing')renderRecent()}
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>showPage(b.dataset.page));
 document.querySelector('#mobileBillButton').onclick=()=>{showPage('billing');const target=document.querySelector('#currentBillCard');target.scrollIntoView({behavior:'smooth',block:'start'});};
@@ -175,29 +474,71 @@ function searchProducts(){
 document.querySelector('#search').addEventListener('input',searchProducts);document.querySelector('#clearSearch').onclick=()=>{document.querySelector('#search').value='';searchProducts()};
 function addCart(id){const p=state.products.find(p=>p.id===id);if(!p)return;const line=cart.find(x=>x.id===id);if(line)line.qty++;else cart.push({id,qty:1});renderCart()}
 function total(){return cart.reduce((s,x)=>{const p=state.products.find(p=>p.id===x.id);return s+(p?Number(p.price)*x.qty:0)},0)}
-function renderCart(){const body=document.querySelector('#cartBody');body.innerHTML=cart.length?cart.map(x=>{const p=state.products.find(p=>p.id===x.id);return p?'<tr><td>'+esc(productName(p))+'<br><button type="button" class="icon-delete" data-remove="'+p.id+'" aria-label="பொருளை நீக்கு" title="பொருளை நீக்கு"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2m-10 0 1 14h10l1-14M10 10v6m4-6v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></td><td><div class="row"><button class="secondary" data-dec="'+p.id+'" style="padding:3px 8px">−</button>'+x.qty+'<button class="secondary" data-inc="'+p.id+'" style="padding:3px 8px">+</button></div></td><td>'+money(p.price)+'</td><td>'+money(p.price*x.qty)+'</td></tr>':''}).join(''):'<tr><td colspan="4" class="muted">இன்னும் பொருட்கள் சேர்க்கப்படவில்லை.</td></tr>';document.querySelector('#billTotal').textContent=money(total());document.querySelector('#sideTotal').textContent=money(total());const count=cart.reduce((s,x)=>s+x.qty,0);document.querySelector('#itemCount').textContent=count;const mobileTotal=document.querySelector('#mobileBillTotal'),mobileCount=document.querySelector('#mobileBillCount');if(mobileTotal)mobileTotal.textContent=money(total());if(mobileCount)mobileCount.textContent=count+' பொருட்கள்';document.querySelectorAll('[data-inc]').forEach(b=>b.onclick=()=>{cart.find(x=>x.id===+b.dataset.inc).qty++;renderCart()});document.querySelectorAll('[data-dec]').forEach(b=>b.onclick=()=>{const x=cart.find(x=>x.id===+b.dataset.dec);x.qty--;if(x.qty<1)cart=cart.filter(y=>y!==x);renderCart()});document.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>{cart=cart.filter(x=>x.id!==+b.dataset.remove);renderCart()});const pay=document.querySelector('#paymentMethod').value;document.querySelector('#splitFields').classList.toggle('hide',pay!=='Split');if(pay!=='Split')document.querySelector('#paidAmount').value=pay==='Credit'?0:total()}
+function renderCart(){const body=document.querySelector('#cartBody');body.innerHTML=cart.length?cart.map(x=>{const p=state.products.find(p=>p.id===x.id);return p?'<tr><td>'+esc(productName(p))+'<br><button type="button" class="icon-delete" data-remove="'+p.id+'" aria-label="பொருளை நீக்கு" title="பொருளை நீக்கு"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2m-10 0 1 14h10l1-14M10 10v6m4-6v6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button></td><td><div class="row"><button class="secondary" data-dec="'+p.id+'" style="padding:3px 8px">−</button>'+x.qty+'<button class="secondary" data-inc="'+p.id+'" style="padding:3px 8px">+</button></div></td><td>'+money(p.price)+'</td><td>'+money(p.price*x.qty)+'</td></tr>':''}).join(''):'<tr><td colspan="4" class="muted">இன்னும் பொருட்கள் சேர்க்கப்படவில்லை.</td></tr>';document.querySelector('#billTotal').textContent=money(total());document.querySelector('#sideTotal').textContent=money(total());const count=cart.reduce((s,x)=>s+x.qty,0);document.querySelector('#itemCount').textContent=count;const mobileTotal=document.querySelector('#mobileBillTotal'),mobileCount=document.querySelector('#mobileBillCount');if(mobileTotal)mobileTotal.textContent=money(total());if(mobileCount)mobileCount.textContent=count+' பொருட்கள்';document.querySelectorAll('[data-inc]').forEach(b=>b.onclick=()=>{cart.find(x=>x.id===+b.dataset.inc).qty++;renderCart()});document.querySelectorAll('[data-dec]').forEach(b=>b.onclick=()=>{const x=cart.find(x=>x.id===+b.dataset.dec);x.qty--;if(x.qty<1)cart=cart.filter(y=>y!==x);renderCart()});document.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>{cart=cart.filter(x=>x.id!==+b.dataset.remove);renderCart()});const pay=document.querySelector('#paymentMethod').value;document.querySelector('#splitFields').classList.toggle('hide',pay!=='Split');if(pay!=='Split')document.querySelector('#paidAmount').value=pay==='Credit'?0:total();updateBillSummary()}
+function paidNow(){const pay=document.querySelector('#paymentMethod').value;return pay==='Credit'?0:pay==='Split'?(Number(document.querySelector('#cashPaid').value)||0)+(Number(document.querySelector('#upiPaid').value)||0):Number(document.querySelector('#paidAmount').value)||0}
+function updateBillSummary(){const sum=total(),got=paidNow(),pay=document.querySelector('#paymentMethod').value,name=document.querySelector('#customerName').value;
+ const change=pay==='Cash'&&got>sum?got-sum:0,paid=Math.min(got,sum),due=Math.max(0,sum-paid),prev=customerDue(name),all=prev+due;
+ let h='<div class="ln"><span>பில் மொத்தம்</span><b>'+money(sum)+'</b></div><div class="ln"><span>செலுத்தியது</span><b class="grn">'+money(paid)+'</b></div>';
+ if(change>0)h+='<div class="ln"><span>திருப்பித் தர வேண்டியது</span><b class="grn">'+money(change)+'</b></div>';
+ h+='<div class="ln"><span>இந்தப் பில் நிலுவை</span><b class="'+(due>0?'red':'grn')+'">'+money(due)+'</b></div>';
+ if(prev>0)h+='<div class="ln"><span>முந்தைய நிலுவை</span><b class="red">'+money(prev)+'</b></div>';
+ h+='<div class="ln big"><span>மொத்த நிலுவை</span><span class="'+(all>0?'red':'grn')+'">'+(all>0?money(all):'✓ முழுமையாகச் செலுத்தப்பட்டது')+'</span></div>';
+ document.querySelector('#billSummary').innerHTML=h;
+ const md=document.querySelector('#mobileBillDue');if(md)md.textContent=all>0?'மொத்த நிலுவை '+money(all):'';
+}
+['#paidAmount','#cashPaid','#upiPaid'].forEach(id=>document.querySelector(id).addEventListener('input',updateBillSummary));
+// ----- Registered customer lookup -----
+const custInput=document.querySelector('#customerName'),custBox=document.querySelector('#custSuggest');
+function custMatches(q){q=norm(q);const qd=q.replace(/\D/g,'');return state.customers.filter(c=>!q||norm(c.name).includes(q)||norm(tr(c.name)).includes(q)||(qd&&String(c.phone||'').includes(qd))).slice(0,8)}
+function showCustSuggest(){const list=custMatches(custInput.value);
+ custBox.innerHTML=list.length?list.map(c=>{const d=customerDue(c.name);return '<button type="button" role="option" data-cust="'+c.id+'"><span><b>'+esc(c.name)+'</b><small>'+esc(c.phone||'—')+'</small></span>'+(d>0?'<span class="due">'+money(d)+'</span>':'<span class="ok">நிலுவை இல்லை</span>')+'</button>'}).join(''):'<div class="empty">பொருத்தம் இல்லை</div>';
+ custBox.classList.remove('hide');
+ custBox.querySelectorAll('[data-cust]').forEach(b=>b.onmousedown=e=>{e.preventDefault();const c=state.customers.find(x=>x.id===+b.dataset.cust);custInput.value=c.name;custBox.classList.add('hide');updateCustomerInfo()})}
+custInput.addEventListener('focus',showCustSuggest);
+custInput.addEventListener('input',()=>{showCustSuggest();updateCustomerInfo()});
+custInput.addEventListener('blur',()=>setTimeout(()=>custBox.classList.add('hide'),150));
+custInput.addEventListener('keydown',e=>{if(e.key==='Escape')custBox.classList.add('hide');if(e.key==='Enter'){const f=custBox.querySelector('[data-cust]');if(f){e.preventDefault();f.onmousedown(e)}}});
+function updateCustomerInfo(){const box=document.querySelector('#custInfo'),name=custInput.value.trim();
+ if(!name){box.className='cust-info hide';box.innerHTML='';updateBillSummary();return}
+ const c=findCustomer(name);
+ if(c){if(custInput.value!==c.name&&/^\d+$/.test(name))custInput.value=c.name;const d=customerDue(c.name),n=customerPendingBills(c.name);box.className='cust-info known';box.innerHTML='<span>✓ பதிவு செய்த வாடிக்கையாளர் · '+esc(c.phone||'')+'</span><span>'+(d>0?'முந்தைய நிலுவை <b class="due">'+money(d)+'</b>'+(n?' · '+n+' பில்கள் நிலுவையில்':''):'நிலுவை இல்லை')+'</span>'}
+ else{box.className='cust-info new';box.innerHTML='<span>புதிய வாடிக்கையாளர் — பதிவு செய்யப்படவில்லை</span><button type="button" class="secondary" id="quickRegister">வாடிக்கையாளராகப் பதிவு செய்</button>';
+  document.querySelector('#quickRegister').onclick=()=>{const ph=prompt('கைபேசி எண் (விருப்பம்)','');if(ph===null)return;registerCustomer(name,ph,0)}}
+ updateBillSummary()}
+function registerCustomer(name,phone,openingDue){name=String(name||'').trim();if(!name){alert('வாடிக்கையாளர் பெயரை உள்ளிடவும்.');return false}
+ if(state.customers.some(c=>norm(c.name)===norm(name))){alert('இந்தப் பெயரில் ஏற்கனவே வாடிக்கையாளர் உள்ளார்.');return false}
+ state.customers.push({id:state.nextCustomer++,name,phone:String(phone||'').replace(/\D/g,''),openingDue:Math.max(0,+(Number(openingDue)||0).toFixed(2))});save();updateCustomerInfo();renderCustomers();return true}
+document.querySelector('#addCustomer').onclick=()=>{const n=document.querySelector('#newCustName'),p=document.querySelector('#newCustPhone'),d=document.querySelector('#newCustDue');if(registerCustomer(n.value,p.value,d.value)){n.value='';p.value='';d.value='0';alert('வாடிக்கையாளர் பதிவு செய்யப்பட்டது.')}};
+function renderCustomers(){const el=document.querySelector('#customerList');if(!el)return;const arr=[...state.customers].map(c=>({c,d:customerDue(c.name)})).sort((a,b)=>b.d-a.d);
+ el.innerHTML=arr.length?arr.map(({c,d})=>'<div class="cust-card"><div><b>'+esc(c.name)+'</b><div class="muted">'+esc(c.phone||'—')+(customerPendingBills(c.name)?' · '+customerPendingBills(c.name)+' பில்கள் நிலுவையில்':'')+'</div></div><div class="amt'+(d>0?'':' zero')+'">'+(d>0?money(d):'நிலுவை இல்லை')+'</div>'+(d>0?'<div class="pay"><input type="number" min="0" step=".01" placeholder="தொகை" data-cpay="'+c.id+'"><button class="secondary" data-cpay-save="'+c.id+'">கடன் வசூல்</button></div>':'')+'</div>').join(''):'<p class="muted">பதிவு செய்த வாடிக்கையாளர்கள் இல்லை.</p>';
+ el.querySelectorAll('[data-cpay-save]').forEach(btn=>btn.onclick=()=>{const c=state.customers.find(x=>x.id===+btn.dataset.cpaySave),n=Number(el.querySelector('[data-cpay="'+c.id+'"]').value),due=customerDue(c.name);
+  if(!Number.isFinite(n)||n<=0||n>due+.009){alert('நிலுவையை விட அதிகமில்லாத, பூஜ்ஜியத்தை விட அதிகமான தொகையை உள்ளிடவும்.');return}
+  let left=n;const od=Number(c.openingDue)||0;if(od>0){const t=Math.min(od,left);c.openingDue=+(od-t).toFixed(2);left-=t}
+  state.bills.filter(b=>norm(b.customer)===norm(c.name)&&b.total>b.paid).forEach(b=>{if(left<=0)return;const t=Math.min(b.total-b.paid,left);b.paid=+(b.paid+t).toFixed(2);left=+(left-t).toFixed(2)});
+  save();renderCredit();renderRecent();updateCustomerInfo();alert('கட்டணம் பதிவு செய்யப்பட்டது.')})}
 document.querySelector('#paymentMethod').onchange=()=>{const pay=document.querySelector('#paymentMethod').value;document.querySelector('#paidAmount').value=pay==='Credit'?0:total();renderCart()};
 document.querySelector('#clearBill').onclick=()=>{if(cart.length&&confirm('தற்போதைய பில்லை அழிக்கவா?')){cart=[];renderCart()}};
-document.querySelector('#completeBill').onclick=()=>{if(!cart.length){alert('முதலில் ஒரு பொருளையாவது சேர்க்கவும்.');return}const sum=total(),pay=document.querySelector('#paymentMethod').value,name=document.querySelector('#customerName').value.trim();let paid=pay==='Credit'?0:pay==='Split'?(Number(document.querySelector('#cashPaid').value)||0)+(Number(document.querySelector('#upiPaid').value)||0):Number(document.querySelector('#paidAmount').value)||0;if(paid<0||paid>sum){alert('செலுத்திய தொகை ₹0 முதல் பில் மொத்தம் வரை இருக்க வேண்டும்.');return}if(pay==='Split'&&Math.abs(paid-sum)>.009){alert('பணம் + UPI தொகை பில் மொத்தத்துக்கு சமமாக இருக்க வேண்டும். பகுதி கட்டணம் என்றால் பணம் அல்லது UPI தேர்வு செய்யவும்.');return}if(pay!=='Credit'&&paid<sum&&!name){if(!confirm('இந்தப் பில்லில் நிலுவை உள்ளது; வாடிக்கையாளர் பெயர் இல்லை. பெயரில்லா கடனாகச் சேமிக்கவா?'))return}const items=cart.map(x=>{const p=state.products.find(p=>p.id===x.id);return {productId:p.id,number:p.number,name:productName(p),qty:x.qty,price:Number(p.price),lineTotal:Number(p.price)*x.qty}});items.forEach(it=>{const p=state.products.find(p=>p.id===it.productId);p.stock=Math.max(0,Number(p.stock)-it.qty)});const b={id:state.nextBill++,date:today(),time:new Date().toLocaleTimeString('en-IN'),customer:name,payment:pay,total:sum,paid,items};state.bills.push(b);save();cart=[];renderCart();renderRecent();renderProducts();alert('பில் எண் '+b.id+' சேமிக்கப்பட்டது.');if(confirm('இப்போது ரசீதை அச்சிடவா?'))printReceipt(b);document.querySelector('#customerName').value='';document.querySelector('#paidAmount').value='0';document.querySelector('#cashPaid').value='0';document.querySelector('#upiPaid').value='0';searchProducts();};
+document.querySelector('#completeBill').onclick=()=>{if(!cart.length){alert('முதலில் ஒரு பொருளையாவது சேர்க்கவும்.');return}const sum=total(),pay=document.querySelector('#paymentMethod').value,name=document.querySelector('#customerName').value.trim();let paid=pay==='Credit'?0:pay==='Split'?(Number(document.querySelector('#cashPaid').value)||0)+(Number(document.querySelector('#upiPaid').value)||0):Number(document.querySelector('#paidAmount').value)||0;let change=0;if(pay==='Cash'&&paid>sum){change=+(paid-sum).toFixed(2);paid=sum}
+if(paid<0||paid>sum){alert('செலுத்திய தொகை ₹0 முதல் பில் மொத்தம் வரை இருக்க வேண்டும்.');return}if(pay==='Split'&&Math.abs(paid-sum)>.009){alert('பணம் + UPI தொகை பில் மொத்தத்துக்கு சமமாக இருக்க வேண்டும். பகுதி கட்டணம் என்றால் பணம் அல்லது UPI தேர்வு செய்யவும்.');return}if(pay!=='Credit'&&paid<sum&&!name){if(!confirm('இந்தப் பில்லில் நிலுவை உள்ளது; வாடிக்கையாளர் பெயர் இல்லை. பெயரில்லா கடனாகச் சேமிக்கவா?'))return}const items=cart.map(x=>{const p=state.products.find(p=>p.id===x.id);return {productId:p.id,number:p.number,name:productName(p),qty:x.qty,price:Number(p.price),lineTotal:Number(p.price)*x.qty}});items.forEach(it=>{const p=state.products.find(p=>p.id===it.productId);p.stock=Math.max(0,Number(p.stock)-it.qty)});const known=findCustomer(name);const custName=known?known.name:name;const prevDue=customerDue(custName);const b={id:state.nextBill++,date:today(),time:new Date().toLocaleTimeString('en-IN'),customer:custName,phone:known?known.phone:'',payment:pay,total:sum,paid,change,prevDue,items};state.bills.push(b);save();cart=[];renderCart();renderRecent();renderProducts();alert('பில் எண் '+b.id+' சேமிக்கப்பட்டது.');if(confirm('இப்போது ரசீதை அச்சிடவா?'))printReceipt(b);document.querySelector('#customerName').value='';updateCustomerInfo();document.querySelector('#paidAmount').value='0';document.querySelector('#cashPaid').value='0';document.querySelector('#upiPaid').value='0';searchProducts();};
 function renderRecent(){const arr=state.bills.slice(-5).reverse();document.querySelector('#recentBills').innerHTML=arr.length?arr.map(b=>'<p><b>Bill #'+b.id+'</b> · '+esc(b.date)+' · '+money(b.total)+'<br><span class="muted">'+esc(b.customer||'நேரடி வாடிக்கையாளர்')+' · '+esc(paymentName(b.payment))+' · நிலுவை '+money(b.total-b.paid)+'</span> <button class="secondary" data-print="'+b.id+'" style="padding:4px 8px">அச்சிடு</button></p>').join(''):'இதுவரை பில்கள் சேமிக்கப்படவில்லை.';document.querySelectorAll('[data-print]').forEach(btn=>btn.onclick=()=>{const b=state.bills.find(x=>x.id===+btn.dataset.print);if(b)printReceipt(b)})}
-function printReceipt(b){const w=window.open('','_blank','width=400,height=650');if(!w){alert('ரசீது அச்சிட பாப்-அப் விண்டோவை அனுமதிக்கவும்.');return}w.document.write('<html lang="ta"><head><meta charset="utf-8"><title>பிரியகா ஸ்டோர் பில் எண் '+b.id+'</title><style>body{font:13px/1.5 "Noto Sans Tamil",Latha,Vijaya,monospace;width:280px;margin:8px}h2,p{text-align:center;margin:5px 0}table{width:100%;border-collapse:collapse}td,th{padding:4px 0;text-align:left;border-bottom:1px dashed #999}td:last-child,th:last-child{text-align:right}.total{text-align:right;font-size:16px;font-weight:bold;margin-top:10px}</style></head><body><h2>PRIYKASTORE</h2><p>மளிகைக் கடை ரசீது</p><hr><p>பில் எண் '+b.id+' · '+esc(b.date)+' '+esc(b.time)+'</p><p>வாடிக்கையாளர்: '+esc(b.customer||'நேரடி வாடிக்கையாளர்')+'</p><table><thead><tr><th>பொருள்</th><th>எண்</th><th>தொகை</th></tr></thead><tbody>'+b.items.map(i=>'<tr><td>'+esc(i.name)+'<br>@'+money(i.price)+'</td><td>'+i.qty+'</td><td>'+money(i.lineTotal)+'</td></tr>').join('')+'</tbody></table><div class="total">மொத்தம்: '+money(b.total)+'</div><p>செலுத்தியது: '+money(b.paid)+'</p><p>நிலுவை: '+money(b.total-b.paid)+'</p><p>கட்டணம்: '+esc(paymentName(b.payment))+'</p><hr><p>மீண்டும் வருக! நன்றி.</p><script>window.onload=()=>window.print()<\/script></body></html>');w.document.close()}
+function printReceipt(b){const w=window.open('','_blank','width=400,height=650');if(!w){alert('ரசீது அச்சிட பாப்-அப் விண்டோவை அனுமதிக்கவும்.');return}w.document.write(tr('<html lang="'+lang+'"><head><meta charset="utf-8"><title>பிரியகா ஸ்டோர் பில் எண் '+b.id+'</title><style>body{font:13px/1.5 "Noto Sans Tamil",Latha,Vijaya,monospace;width:280px;margin:8px}h2,p{text-align:center;margin:5px 0}table{width:100%;border-collapse:collapse}td,th{padding:4px 0;text-align:left;border-bottom:1px dashed #999}td:last-child,th:last-child{text-align:right}.total{text-align:right;font-size:16px;font-weight:bold;margin-top:10px}</style></head><body><h2>PRIYKASTORE</h2><p>மளிகைக் கடை ரசீது</p><hr><p>பில் எண் '+b.id+' · '+esc(b.date)+' '+esc(b.time)+'</p><p>வாடிக்கையாளர்: '+esc(b.customer||'நேரடி வாடிக்கையாளர்')+'</p><table><thead><tr><th>பொருள்</th><th>எண்</th><th>தொகை</th></tr></thead><tbody>'+b.items.map(i=>'<tr><td>'+esc(i.name)+'<br>@'+money(i.price)+'</td><td>'+i.qty+'</td><td>'+money(i.lineTotal)+'</td></tr>').join('')+'</tbody></table><div class="total">மொத்தம்: '+money(b.total)+'</div><p>செலுத்தியது: '+money(b.paid)+'</p>'+(b.change?'<p>திருப்பித் தர வேண்டியது: '+money(b.change)+'</p>':'')+'<p>இந்தப் பில் நிலுவை: '+money(b.total-b.paid)+'</p>'+(b.prevDue?'<p>முந்தைய நிலுவை: '+money(b.prevDue)+'</p>':'')+((b.prevDue||0)+(b.total-b.paid)>0?'<p class="total">மொத்த நிலுவை: '+money((b.prevDue||0)+b.total-b.paid)+'</p>':'')+'<p>கட்டணம்: '+esc(paymentName(b.payment))+'</p><hr><p>மீண்டும் வருக! நன்றி.</p>')+'<script>window.onload=()=>window.print()<\/script></body></html>');w.document.close()}
 const categorySelect=document.querySelector('#categoryFilter');
 function renderProducts(){const cats=[...new Set(state.products.map(p=>p.category))].sort();const old=categorySelect.value;categorySelect.innerHTML='<option value="">அனைத்து வகைகளும்</option>'+cats.map(c=>'<option value="'+esc(c)+'">'+esc(productCategory(c))+'</option>').join('');categorySelect.value=cats.includes(old)?old:'';const q=document.querySelector('#productSearch').value.toLowerCase().trim(),cat=categorySelect.value;const arr=state.products.filter(p=>(!q||String(p.number).includes(q)||String(p.name).toLowerCase().includes(q)||String(productName(p)).toLowerCase().includes(q)||String(p.category).toLowerCase().includes(q)||String(productCategory(p.category)).toLowerCase().includes(q))&&(!cat||p.category===cat));document.querySelector('#productsTable').innerHTML=arr.map(p=>'<tr><td>'+esc(p.number)+'</td><td><b>'+esc(productName(p))+'</b><br><small class="muted">'+esc(productCategory(p.category))+'</small></td><td><input aria-label="விலை: '+esc(productName(p))+'" data-price="'+p.id+'" type="number" min="0" step=".01" value="'+Number(p.price)+'" style="width:95px;padding:6px"></td><td><input aria-label="இருப்பு: '+esc(productName(p))+'" data-stock="'+p.id+'" type="number" min="0" step="1" value="'+Number(p.stock)+'" style="width:75px;padding:6px"></td><td><button class="secondary" data-saveproduct="'+p.id+'" style="padding:6px">சேமி</button></td></tr>').join('');document.querySelectorAll('[data-saveproduct]').forEach(btn=>btn.onclick=()=>{const id=+btn.dataset.saveproduct,p=state.products.find(x=>x.id===id),price=document.querySelector('[data-price="'+id+'"]'),stock=document.querySelector('[data-stock="'+id+'"]');if(Number(price.value)<0||price.value===''||Number(stock.value)<0||stock.value===''||!Number.isFinite(+price.value)||!Number.isFinite(+stock.value)){alert('சரியான விலை மற்றும் பூஜ்ஜியத்துக்கு குறையாத இருப்பை உள்ளிடவும்.');return}p.price=+Number(price.value).toFixed(2);p.stock=Math.floor(+stock.value);save();searchProducts();renderProducts();alert('பொருள் விவரம் புதுப்பிக்கப்பட்டது.');})}
 document.querySelector('#productSearch').oninput=renderProducts;categorySelect.onchange=renderProducts;document.querySelector('#addProduct').onclick=()=>{const name=document.querySelector('#newName').value.trim(),category=document.querySelector('#newCategory').value.trim()||'General',price=Number(document.querySelector('#newPrice').value),stock=Number(document.querySelector('#newStock').value);if(!name||price<0||stock<0||!Number.isFinite(price)||!Number.isFinite(stock)){alert('பொருளின் பெயர், விலை, இருப்பைச் சரியாக உள்ளிடவும்.');return}const id=state.nextProduct++;state.products.push({id,number:String(id).padStart(2,'0'),name,category,price:+price.toFixed(2),stock:Math.floor(stock)});save();document.querySelector('#newName').value='';document.querySelector('#newPrice').value='0';document.querySelector('#newStock').value='0';renderProducts();searchProducts();alert('பொருள் எண் '+String(id).padStart(2,'0'))};
-function renderCredit(){const arr=state.bills.filter(b=>b.total>b.paid);document.querySelector('#creditList').innerHTML=arr.length?'<div class="tablewrap"><table><thead><tr><th>பில்</th><th>வாடிக்கையாளர்</th><th>மொத்தம்</th><th>செலுத்தியது</th><th>நிலுவை</th><th>பெறும் தொகை ₹</th></tr></thead><tbody>'+arr.map(b=>'<tr><td>#'+b.id+'<br><small>'+b.date+'</small></td><td>'+esc(b.customer||'பெயரிடப்படாதவர்')+'</td><td>'+money(b.total)+'</td><td>'+money(b.paid)+'</td><td>'+money(b.total-b.paid)+'</td><td><input data-receive="'+b.id+'" type="number" min="0" step=".01" placeholder="தொகை" style="width:95px"><button class="secondary" data-receive-save="'+b.id+'" style="padding:6px;margin-top:4px">சேமி</button></td></tr>').join('')+'</tbody></table></div>':'<p class="muted">நிலுவைக் கடன் இல்லை.</p>';document.querySelectorAll('[data-receive-save]').forEach(btn=>btn.onclick=()=>{const id=+btn.dataset.receiveSave,b=state.bills.find(x=>x.id===id),inp=document.querySelector('[data-receive="'+id+'"]'),n=Number(inp.value);if(!Number.isFinite(n)||n<=0||n>b.total-b.paid){alert('நிலுவையை விட அதிகமில்லாத, பூஜ்ஜியத்தை விட அதிகமான தொகையை உள்ளிடவும்.');return}b.paid=+(b.paid+n).toFixed(2);save();renderCredit();renderRecent();alert('கட்டணம் பதிவு செய்யப்பட்டது.')})}
+function renderCredit(){renderCustomers();const arr=state.bills.filter(b=>b.total>b.paid);document.querySelector('#creditList').innerHTML=arr.length?'<div class="tablewrap"><table><thead><tr><th>பில்</th><th>வாடிக்கையாளர்</th><th>மொத்தம்</th><th>செலுத்தியது</th><th>நிலுவை</th><th>பெறும் தொகை ₹</th></tr></thead><tbody>'+arr.map(b=>'<tr><td>#'+b.id+'<br><small>'+b.date+'</small></td><td>'+esc(b.customer||'பெயரிடப்படாதவர்')+'</td><td>'+money(b.total)+'</td><td>'+money(b.paid)+'</td><td>'+money(b.total-b.paid)+'</td><td><input data-receive="'+b.id+'" type="number" min="0" step=".01" placeholder="தொகை" style="width:95px"><button class="secondary" data-receive-save="'+b.id+'" style="padding:6px;margin-top:4px">சேமி</button></td></tr>').join('')+'</tbody></table></div>':'<p class="muted">நிலுவைக் கடன் இல்லை.</p>';document.querySelectorAll('[data-receive-save]').forEach(btn=>btn.onclick=()=>{const id=+btn.dataset.receiveSave,b=state.bills.find(x=>x.id===id),inp=document.querySelector('[data-receive="'+id+'"]'),n=Number(inp.value);if(!Number.isFinite(n)||n<=0||n>b.total-b.paid){alert('நிலுவையை விட அதிகமில்லாத, பூஜ்ஜியத்தை விட அதிகமான தொகையை உள்ளிடவும்.');return}b.paid=+(b.paid+n).toFixed(2);save();renderCredit();renderRecent();alert('கட்டணம் பதிவு செய்யப்பட்டது.')})}
 document.querySelector('#expenseDate').value=today();document.querySelector('#addExpense').onclick=()=>{const date=document.querySelector('#expenseDate').value,amount=Number(document.querySelector('#expenseAmount').value),note=document.querySelector('#expenseNote').value.trim();if(!date||!Number.isFinite(amount)||amount<=0||!note){alert('தேதி, தொகை மற்றும் செலவு விவரத்தை உள்ளிடவும்.');return}state.expenses.push({date,amount:+amount.toFixed(2),note});save();document.querySelector('#expenseAmount').value='';document.querySelector('#expenseNote').value='';renderExpenses();alert('செலவு சேமிக்கப்பட்டது.')};
 function renderExpenses(){const arr=[...state.expenses].reverse();document.querySelector('#expenseList').innerHTML=arr.length?'<div class="tablewrap"><table><thead><tr><th>தேதி</th><th>விவரம்</th><th>தொகை</th></tr></thead><tbody>'+arr.map(e=>'<tr><td>'+esc(e.date)+'</td><td>'+esc(e.note)+'</td><td>'+money(e.amount)+'</td></tr>').join('')+'</tbody></table></div>':'<p class="muted">செலவுகள் இன்னும் சேமிக்கப்படவில்லை.</p>'}
-function csvCell(v){return '"'+String(v??'').replace(/"/g,'""')+'"'}function download(name,rows){const csv='\ufeff'+rows.map(r=>r.map(csvCell).join(',')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();URL.revokeObjectURL(url)}
+function csvCell(v){return '"'+String(v??'').replace(/"/g,'""')+'"'}function download(name,rows){const csv='\ufeff'+rows.map(r=>r.map(v=>csvCell(tr(v))).join(',')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();URL.revokeObjectURL(url)}
 document.querySelector('#exportBills').onclick=()=>download('priykastore-bills-'+today()+'.csv',[['பில் எண்','தேதி','நேரம்','வாடிக்கையாளர்','கட்டணம்','மொத்தம்','செலுத்தியது','நிலுவை'],...state.bills.map(b=>[b.id,b.date,b.time,b.customer,b.payment,b.total,b.paid,b.total-b.paid])]);
 document.querySelector('#exportItems').onclick=()=>download('priykastore-bill-items-'+today()+'.csv',[['பில் எண்','தேதி','வாடிக்கையாளர்','பொருள் எண்','பொருள்','எண்ணிக்கை','ஒரு பொருள் விலை','வரி மொத்தம்'],...state.bills.flatMap(b=>b.items.map(i=>[b.id,b.date,b.customer,i.number,i.name,i.qty,i.price,i.lineTotal]))]);
 document.querySelector('#exportProducts').onclick=()=>download('priykastore-products-'+today()+'.csv',[['பொருள் எண்','பெயர்','வகை','விற்பனை விலை','தற்போதைய இருப்பு'],...state.products.map(p=>[p.number,productName(p),productCategory(p.category),p.price,p.stock])]);
 document.querySelector('#exportCredit').onclick=()=>download('priykastore-credit-'+today()+'.csv',[['பில் எண்','தேதி','வாடிக்கையாளர்','மொத்தம்','செலுத்தியது','நிலுவை'],...state.bills.filter(b=>b.total>b.paid).map(b=>[b.id,b.date,b.customer,b.total,b.paid,b.total-b.paid])]);
 document.querySelector('#exportExpenses').onclick=()=>download('priykastore-expenses-'+today()+'.csv',[['தேதி','விவரம்','தொகை'],...state.expenses.map(e=>[e.date,e.note,e.amount])]);
 document.querySelector('#exportAll').onclick=()=>{const blob=new Blob([JSON.stringify({...state,backupMadeAt:new Date().toISOString()},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='priykastore-backup-'+today()+'.json';a.click();URL.revokeObjectURL(url)};
-document.querySelector('#printReport').onclick=()=>{const win=window.open('','_blank');if(!win){alert('அறிக்கையை அச்சிட பாப்-அப் விண்டோவை அனுமதிக்கவும்.');return}win.document.write('<title>பிரியகா ஸ்டோர் அறிக்கை</title><h1>பிரியகா ஸ்டோர் அறிக்கை</h1><p>உருவாக்கிய நேரம்: '+new Date().toLocaleString()+'</p><h2>சுருக்கம்</h2><p>மொத்த பில்கள்: '+state.bills.length+'</p><p>மொத்த விற்பனை: '+money(state.bills.reduce((s,b)=>s+b.total,0))+'</p><p>நிலுவைக் கடன்: '+money(state.bills.reduce((s,b)=>s+Math.max(0,b.total-b.paid),0))+'</p><p>மொத்தச் செலவுகள்: '+money(state.expenses.reduce((s,e)=>s+e.amount,0))+'</p><h2>பில்கள்</h2><table border="1" cellpadding="5"><tr><th>பில்</th><th>தேதி</th><th>வாடிக்கையாளர்</th><th>மொத்தம்</th><th>செலுத்தியது</th><th>நிலுவை</th></tr>'+state.bills.map(b=>'<tr><td>'+b.id+'</td><td>'+b.date+'</td><td>'+esc(b.customer)+'</td><td>'+money(b.total)+'</td><td>'+money(b.paid)+'</td><td>'+money(b.total-b.paid)+'</td></tr>').join('')+'</table><script>window.onload=()=>window.print()<\/script>');win.document.close()};
-document.querySelector('#restoreBackup').onclick=()=>{const f=document.querySelector('#restoreFile').files[0];if(!f){alert('முதலில் JSON காப்புப்பிரதி கோப்பைத் தேர்ந்தெடுக்கவும்.');return}if(!confirm('இந்தக் காப்புப்பிரதியை மீட்டெடுத்து தற்போதைய தரவை மாற்றவா?'))return;const reader=new FileReader();reader.onload=()=>{try{const v=JSON.parse(reader.result);if(!Array.isArray(v.products)||!Array.isArray(v.bills)||!Array.isArray(v.expenses))throw Error();if(!confirm('தற்போதைய தரவை மாற்றுவதை உறுதிப்படுத்தவும்.'))return;state={products:v.products,bills:v.bills,expenses:v.expenses,nextBill:v.nextBill||1,nextProduct:v.nextProduct||Math.max(0,...v.products.map(p=>p.id))+1};save();refreshAll();alert('காப்புப்பிரதி மீட்டெடுக்கப்பட்டது.')}catch(e){alert('இது சரியான PriykaStore காப்புப்பிரதி கோப்பு அல்ல.')}};reader.readAsText(f)};
+document.querySelector('#printReport').onclick=()=>{const win=window.open('','_blank');if(!win){alert('அறிக்கையை அச்சிட பாப்-அப் விண்டோவை அனுமதிக்கவும்.');return}win.document.write(tr('<title>பிரியகா ஸ்டோர் அறிக்கை</title><h1>பிரியகா ஸ்டோர் அறிக்கை</h1><p>உருவாக்கிய நேரம்: '+new Date().toLocaleString()+'</p><h2>சுருக்கம்</h2><p>மொத்த பில்கள்: '+state.bills.length+'</p><p>மொத்த விற்பனை: '+money(state.bills.reduce((s,b)=>s+b.total,0))+'</p><p>நிலுவைக் கடன்: '+money(state.bills.reduce((s,b)=>s+Math.max(0,b.total-b.paid),0))+'</p><p>மொத்தச் செலவுகள்: '+money(state.expenses.reduce((s,e)=>s+e.amount,0))+'</p><h2>பில்கள்</h2><table border="1" cellpadding="5"><tr><th>பில்</th><th>தேதி</th><th>வாடிக்கையாளர்</th><th>மொத்தம்</th><th>செலுத்தியது</th><th>நிலுவை</th></tr>'+state.bills.map(b=>'<tr><td>'+b.id+'</td><td>'+b.date+'</td><td>'+esc(b.customer)+'</td><td>'+money(b.total)+'</td><td>'+money(b.paid)+'</td><td>'+money(b.total-b.paid)+'</td></tr>').join('')+'</table>')+'<script>window.onload=()=>window.print()<\/script>');win.document.close()};
+document.querySelector('#restoreBackup').onclick=()=>{const f=document.querySelector('#restoreFile').files[0];if(!f){alert('முதலில் JSON காப்புப்பிரதி கோப்பைத் தேர்ந்தெடுக்கவும்.');return}if(!confirm('இந்தக் காப்புப்பிரதியை மீட்டெடுத்து தற்போதைய தரவை மாற்றவா?'))return;const reader=new FileReader();reader.onload=()=>{try{const v=JSON.parse(reader.result);if(!Array.isArray(v.products)||!Array.isArray(v.bills)||!Array.isArray(v.expenses))throw Error();if(!confirm('தற்போதைய தரவை மாற்றுவதை உறுதிப்படுத்தவும்.'))return;state={products:v.products,bills:v.bills,expenses:v.expenses,customers:Array.isArray(v.customers)?v.customers:[],nextCustomer:v.nextCustomer||((v.customers||[]).length+1),nextBill:v.nextBill||1,nextProduct:v.nextProduct||Math.max(0,...v.products.map(p=>p.id))+1};save();refreshAll();alert('காப்புப்பிரதி மீட்டெடுக்கப்பட்டது.')}catch(e){alert('இது சரியான PriykaStore காப்புப்பிரதி கோப்பு அல்ல.')}};reader.readAsText(f)};
 function refreshAll(){searchProducts();renderCart();renderRecent();renderProducts();renderCredit();renderExpenses();refreshStats()}
-load();refreshAll();
+load();refreshAll();applyLang();
 if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
   window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(err => console.warn("Offline cache unavailable:", err)));
 }
