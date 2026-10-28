@@ -1,32 +1,25 @@
-# PriykaStore Billing
+# பிரியகா ஸ்டோர் பில்லிங்
 
-A lightweight, mobile-first grocery billing starter for PriykaStore.
+தமிழில் பயன்படுத்தும் கிராம மளிகைக் கடை பில்லிங் தொடக்கப் பதிப்பு.
 
-## Features
-- Product-number and name search; tap a product to add it to the bill
-- Starter catalogue with illustrative prices and **zero opening stock**
-- Edit selling prices and stock quantities
-- Cash, UPI, split payment and credit/due tracking
-- Customer credit balances and payment collection
-- Expense log
-- CSV exports for bills, bill items, products/stock, credit and expenses
-- JSON backup and restore
-- Printable receipt (browser print dialog; Bluetooth thermal printer compatibility must be tested on the target Android device)
-- Local browser storage and basic offline caching
+## அம்சங்கள்
+- பொருள் எண் அல்லது பெயரால் தேடி பில்லில் சேர்த்தல்
+- விற்பனை விலை மற்றும் இருப்பைத் திருத்துதல்
+- ரொக்கம், UPI, இரண்டும் சேர்த்து செலுத்துதல், கடன்
+- வாடிக்கையாளர் கடன் நிலுவை மற்றும் வசூல் பதிவு
+- கடைச் செலவு பதிவு
+- பில், பில் பொருட்கள், இருப்பு, கடன், செலவுகள் ஆகியவற்றுக்கான CSV பதிவிறக்கம்
+- JSON காப்புப்பிரதி மற்றும் மீட்டெடுத்தல்
+- ரசீது அச்சிடல் (உலாவியின் அச்சிடு வசதி; SEZNIK Veer 58mm அச்சுப்பொறியை நேரடியாகப் பயன்படுத்த முடியுமா என்பதை உங்கள் Android சாதனத்தில் சோதிக்கவும்)
+- இந்தச் சாதனத்தின் உலாவியில் உள்ளூர்த் தரவு சேமிப்பு
 
-## Publish with GitHub Pages
-1. Open this repository's **Settings → Pages**.
-2. Under **Build and deployment**, choose **Deploy from a branch**.
-3. Select branch **main** and folder **/(root)**, then press **Save**.
-4. After deployment completes, open: https://duckgamer23.github.io/-billing/
+## GitHub Pages
+1. Repository Settings → Pages திறக்கவும்.
+2. Deploy from a branch தேர்வு செய்யவும்.
+3. `main` branch மற்றும் `/(root)` folder தேர்வு செய்து Save அழுத்தவும்.
+4. தளம்: https://duckgamer23.github.io/-billing/
 
-## Important data warning
-This starter stores sales, products, credit, and expenses in the browser's local storage. It does **not** currently sync between devices. Clearing browser data, using another browser/device, or losing the device can lose those records. Download a JSON backup regularly and keep it somewhere safe.
+## முக்கியம்
+இந்தப் பதிப்பு தரவை தற்போதைய உலாவியில் மட்டுமே சேமிக்கிறது; பல சாதனங்களில் ஒத்திசைவு இல்லை. உலாவித் தரவை அழித்தால் அல்லது சாதனம் தொலைந்தால் பதிவுகள் இழக்கப்படலாம். அடிக்கடி JSON காப்புப்பிரதி எடுத்து பாதுகாப்பாக வைக்கவும்.
 
-Before live shop use:
-- Set the correct selling price for each product.
-- Enter the real opening stock for each product; the starter sets it to zero.
-- Test billing, credit collection, CSV export and receipt printing.
-- Create a secure cloud database with authentication and per-user access policies before adding cross-device cloud sync. Do not put database passwords or service-role keys in website code.
-
-Starter catalogue prices are illustrative examples only, not verified current market prices.
+தொடக்கப் பட்டியலில் உள்ள விலைகள் உதாரணங்கள் மட்டுமே; உண்மையான விற்பனைக்கு முன் சரியான விலை மற்றும் தொடக்க இருப்பை உள்ளிடவும். தொடக்க இருப்பு 0. பல சாதன ஒத்திசைவு மற்றும் பாதுகாப்பான உள்நுழைவிற்கு தனி பாதுகாப்பான தரவுத்தள அமைப்பு தேவை.
