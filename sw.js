@@ -1,4 +1,4 @@
-const CACHE_NAME = 'priykastore-shell-v13';
+const CACHE_NAME = 'priykastore-shell-v14';
 const APP_SHELL = ['./', './index.html', './manifest.webmanifest', './app-icon.svg'];
 
 self.addEventListener('install', event => {
